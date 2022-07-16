@@ -1,0 +1,44 @@
+// settings styles
+#settings
+    display none
+    border-radius 20px
+    background-color cd-background
+    width 100%
+    height calc(100vh - 100px)
+    z-index 20
+    overflow: hidden
+    padding-top 30px
+    box-sizing: border-box
+
+#settingsoff
+    position: absolute
+    top 0
+    right 0
+    width 70px
+    height 100vh
+    padding 15px
+    box-sizing: border-box
+    transition transform 0.3s
+    transform: translateX(102%)
+    background-color: cd-verydark
+    z-index 5
+    svg
+        width: 40px
+        height 40px
+
+.settings-entry
+    background-color cd-grey
+    margin-bottom 20px
+    padding: 20px
+    font-size: 17pt
+    text-align: left
+    display: block
+
+body.settings
+    #content
+        display: none
+    #settings
+        display: block
+    
+    #settingsoff
+        transform: translateX(0)

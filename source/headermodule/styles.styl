@@ -1,11 +1,28 @@
 // header styles
 #header
-    position: relative
+    position: fixed
     width 100%
     height 55px
 
+#head-text
+    position fixed
+    top 25px
+    left 30px
+    font-size: 20px
+    transition transform 0.3s
+
+#settings-text
+    position fixed
+    top 25px
+    left 75px
+    font-size: 20px
+    font-weight: bold
+    color cd-background
+    transition transform 0.3s
+    transform translateX(100vw)
+
 #settings-button
-    position: absolute
+    position: fixed
     top 0
     right 10px
     width 70px
@@ -17,7 +34,11 @@
         width: 40px
         height 40px
 
-
-#settings-button.on
-    color cd-background
-    transform: translateX(-100vw) translateX(+100%) translateX(+20px)    
+body.settings
+    #settings-button
+        color cd-background
+        transform: translateX(-100vw) translateX(+100%) translateX(+20px)    
+    #settings-text
+        transform translateX(0)
+    #head-text
+        transform translateX(-300px)

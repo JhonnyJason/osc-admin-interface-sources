@@ -1,17 +1,20 @@
 // settings styles
 #settings
-    display none
-    border-radius 20px
-    background-color cd-background
+    position absolute
+    top 0
+    left 0
     width 100%
-    height calc(100vh - 100px)
-    z-index 20
-    overflow: hidden
+    height calc(100vh - 85px)
     padding-top 30px
+    padding-bottom 30px
     box-sizing: border-box
+    overflow: hidden
+    transition: opacity 0.3s
+    opacity: 0
+    overflow-y scroll
 
 #settingsoff
-    position: absolute
+    position: fixed
     top 0
     right 0
     width 70px
@@ -33,12 +36,31 @@
     font-size: 17pt
     text-align: left
     display: block
+    .text
+        max-width calc(100% - 30px)
+        overflow: hidden
+        text-overflow: ellipsis
+    .arrow
+        position: absolute
+        right 20px
+        top 50%
+        transform translateY(-50%)
+
+        svg
+            width 30px
+            height 30px
+
+.grouping-head
+    margin-top 10px
+    padding: 20px
+    font-size: 15pt
+    text-align: right
 
 body.settings
     #content
-        display: none
+        opacity 0
     #settings
-        display: block
+        opacity 1
     
     #settingsoff
         transform: translateX(0)

@@ -1,28 +1,51 @@
 //- settings structure
 #settings
+    .grouping-head Account Settings
     .settings-group
         #settingsbutton-account.settings-entry.click-button.icon-entry
             .icon: svg: use(href="#svg-account-icon")
             .text Account
             .arrow: svg: use(href="#svg-chevron-right-icon") 
+        #settingsbutton-secret-manager.settings-entry.click-button.icon-entry
+            .icon: svg: use(href="#svg-key-shield-icon")
+            .text Secret Manager
+            .arrow: svg: use(href="#svg-chevron-right-icon") 
+        #settingsbutton-data-manager.settings-entry.click-button.icon-entry
+            .icon: svg: use(href="#svg-data-icon")
+            .text Data Manager
+            .arrow: svg: use(href="#svg-chevron-right-icon") 
     
-    #settingsgroup-server.grouping-head Server Settings
+    .grouping-head Communicaion Server Settings
     .settings-group
-        #settingsbutton-signallingserver.settings-entry.click-button 
+        #settingsbutton-signallingserver.settings-entry.click-button.icon-entry
+            .icon: svg: use(href="#svg-signal-icon")
             .text Signalling Server
             .arrow: svg: use(href="#svg-chevron-right-icon") 
-        #settingsbutton-turnserver.settings-entry.click-button 
+        #settingsbutton-turnserver.settings-entry.click-button.icon-entry 
+            .icon: svg: use(href="#svg-stun-icon") 
             .text STUN/TURN Server
             .arrow: svg: use(href="#svg-chevron-right-icon") 
 
-    //- #settingsgroup-funny.grouping-head Funny Settings
-    //- #settingsbutton-preference.settings-entry.click-button 
-    //-     .text Preference
-    //-     .arrow: svg: use(href="#svg-chevron-right-icon") 
-    //- #settingsbutton-favourite.settings-entry.click-button 
-    //-     .text Favourite mmustafa arghaspdawodiawnodiawdoaiwdnoaiwndaüwdawda adawdawdawd ajhwiawda
-    //-     .arrow: svg: use(href="#svg-chevron-right-icon") 
-    //- #settingsbutton-themecolor.settings-entry.click-button 
-    //-     .text Theme Color
-    //-     .arrow: svg: use(href="#svg-chevron-right-icon") 
+    //- .grouping-head Funny Settings
+    //- .settings-group
+    //-     #settingsbutton-preference.settings-entry.click-button 
+    //-         .text Preference
+    //-         .arrow: svg: use(href="#svg-chevron-right-icon") 
+    //-     #settingsbutton-favourite.settings-entry.click-button 
+    //-         .text Favourite mmustafa arghaspdawodiawnodiawdoaiwdnoaiwndaüwdawda adawdawdawd ajhwiawda
+    //-         .arrow: svg: use(href="#svg-chevron-right-icon") 
+    //-     #settingsbutton-themecolor.settings-entry.click-button 
+    //-         .text Theme Color
+    //-         .arrow: svg: use(href="#svg-chevron-right-icon") 
     
+    //- .grouping-head Moar Funny Settings
+    //- .settings-group
+    //-     #settingsbutton-preference.settings-entry.click-button 
+    //-         .text Preference
+    //-         .arrow: svg: use(href="#svg-chevron-right-icon") 
+    //-     #settingsbutton-favourite.settings-entry.click-button 
+    //-         .text Favourite mmustafa arghaspdawodiawnodiawdoaiwdnoaiwndaüwdawda adawdawdawd ajhwiawda
+    //-         .arrow: svg: use(href="#svg-chevron-right-icon") 
+    //-     #settingsbutton-themecolor.settings-entry.click-button 
+    //-         .text Theme Color
+    //-         .arrow: svg: use(href="#svg-chevron-right-icon") 

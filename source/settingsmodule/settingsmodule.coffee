@@ -33,18 +33,24 @@ settingsbuttonAccountClicked = ->
     # settingspageAccount.
     currentlyShownSettingspage = settingspageAccount
     currentlyShownSettingspage.classList.add("here")
+    # document.body.classList.add("away")
+    # mainframe.classList.add("zoomed-out")
     return
 
 settingsbuttonSignallingserverClicked = ->
     # settingspageSignallingserver.
     currentlyShownSettingspage = settingspageSignallingserver
     currentlyShownSettingspage.classList.add("here")
+    # document.body.classList.add("away")
+    # mainframe.classList.add("zoomed-out")
     return
 
 settingsbuttonTurnserverClicked = ->
     # settingspageTurnserver.
     currentlyShownSettingspage = settingspageTurnserver
     currentlyShownSettingspage.classList.add("here")
+    # document.body.classList.add("away")
+    # mainframe.classList.add("zoomed-out")
     return
 
 ############################################################
@@ -52,6 +58,8 @@ settingsBackButtonClicked = ->
     return unless currentlyShownSettingspage?
     currentlyShownSettingspage.classList.remove("here")
     currentlyShownSettingspage = null
+    # document.body.classList.remove("away")
+    # mainframe.classList.remove("zoomed-out")
     return
 
 #endregion

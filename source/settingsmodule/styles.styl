@@ -1,17 +1,19 @@
-// settings styles
+/*==========================================================
+Settings Content
+==========================================================*/
 #settings
     position absolute
     top 0
     left 0
     width 100%
     height calc(100vh - 85px)
-    padding-top 30px
-    padding-bottom 30px
+    padding 20px 0
     box-sizing: border-box
     overflow: hidden
     transition: opacity 0.3s
     opacity: 0
-    overflow-y scroll
+    overflow-y auto
+    z-index: -1
 
 #settingsoff
     position: fixed
@@ -30,12 +32,11 @@
         height 40px
 
 .settings-entry
-    background-color cd-grey
-    margin-bottom 20px
-    padding: 20px
-    font-size: 17pt
+    padding: 15px 20px
+    font-size: 15pt
     text-align: left
     display: block
+    border-bottom: solid 1px #444
     .text
         max-width calc(100% - 30px)
         overflow: hidden
@@ -45,24 +46,57 @@
         right 20px
         top 50%
         transform translateY(-50%)
+        color #666
+
+        svg
+            width 30px
+            height 30px
+    
+.icon-entry
+    .text
+        max-width calc(100% - 70px)
+        overflow: hidden
+        text-overflow: ellipsis
+        position relative
+        left 40px
+    .icon
+        position: absolute
+        left 20px
+        top 50%
+        transform translateY(-50%)
+        color white
 
         svg
             width 30px
             height 30px
 
+.settings-entry:last-child
+    border-bottom: none
+
+
 .grouping-head
-    margin-top 10px
-    padding: 20px
+    margin-top 30px
+    padding: 15px 20px
     font-size: 15pt
     text-align: right
+    color #888
 
+/*==========================================================
+Settings Content - present
+==========================================================*/
 body.settings
     #content
         opacity 0
+        z-index -1
     #settings
         opacity 1
+        z-index 20
     
     #settingsoff
         transform: translateX(0)
 
+/*==========================================================
+settingspages specifics
+==========================================================*/
+@import 'settingspage-base.styl'
 @import 'allsettingspages.styl'

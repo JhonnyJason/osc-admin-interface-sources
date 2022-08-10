@@ -1,25 +1,28 @@
 //- settings structure
 #settings
-    #settings-account.settings-entry.click-button 
-        .text Account
-        .arrow: svg: use(href="#svg-chevron-right-icon") 
+    .settings-group
+        #settingsbutton-account.settings-entry.click-button.icon-entry
+            .icon: svg: use(href="#svg-account-icon")
+            .text Account
+            .arrow: svg: use(href="#svg-chevron-right-icon") 
     
-    #settings-server.grouping-head Server Settings
-    #settings-signalling-server.settings-entry.click-button 
-        .text Signalling Server
-        .arrow: svg: use(href="#svg-chevron-right-icon") 
-    #settings-turn-server.settings-entry.click-button 
-        .text STUN/TURN Server
-        .arrow: svg: use(href="#svg-chevron-right-icon") 
+    #settingsgroup-server.grouping-head Server Settings
+    .settings-group
+        #settingsbutton-signallingserver.settings-entry.click-button 
+            .text Signalling Server
+            .arrow: svg: use(href="#svg-chevron-right-icon") 
+        #settingsbutton-turnserver.settings-entry.click-button 
+            .text STUN/TURN Server
+            .arrow: svg: use(href="#svg-chevron-right-icon") 
 
-    #settings-funny.grouping-head Funny Settings
-    #settings-preference.settings-entry.click-button 
-        .text Preference
-        .arrow: svg: use(href="#svg-chevron-right-icon") 
-    #settings-favourite.settings-entry.click-button 
-        .text Favourite mmustafa arghaspdawodiawnodiawdoaiwdnoaiwndaüwdawda adawdawdawd ajhwiawda
-        .arrow: svg: use(href="#svg-chevron-right-icon") 
-    #settings-theme-color.settings-entry.click-button 
-        .text Theme Color
-        .arrow: svg: use(href="#svg-chevron-right-icon") 
+    //- #settingsgroup-funny.grouping-head Funny Settings
+    //- #settingsbutton-preference.settings-entry.click-button 
+    //-     .text Preference
+    //-     .arrow: svg: use(href="#svg-chevron-right-icon") 
+    //- #settingsbutton-favourite.settings-entry.click-button 
+    //-     .text Favourite mmustafa arghaspdawodiawnodiawdoaiwdnoaiwndaüwdawda adawdawdawd ajhwiawda
+    //-     .arrow: svg: use(href="#svg-chevron-right-icon") 
+    //- #settingsbutton-themecolor.settings-entry.click-button 
+    //-     .text Theme Color
+    //-     .arrow: svg: use(href="#svg-chevron-right-icon") 
     

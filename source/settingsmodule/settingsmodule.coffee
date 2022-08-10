@@ -4,7 +4,8 @@ import { createLogFunctions } from "thingy-debug"
 {log, olog} = createLogFunctions("settingsmodule")
 #endregion
 
-currentShownSettings = null
+############################################################
+currentlyShownSettingspage = null
 
 ############################################################
 export initialize = ->
@@ -12,24 +13,45 @@ export initialize = ->
     settingsoffButton.addEventListener("click", settingsoffButtonClicked)
     
     #specific settings
-    settingsSignallingServer.addEventListener("click", settingsSignallingServerClicked)
+    settingsbuttonAccount.addEventListener("click", settingsbuttonAccountClicked)
+    settingsbuttonSignallingserver.addEventListener("click", settingsbuttonSignallingserverClicked)    
+    settingsbuttonTurnserver.addEventListener("click", settingsbuttonTurnserverClicked)
+    
     #Implement or Remove :-)
     backButtons = document.getElementsByClassName("settingspage-backbutton")
     b.addEventListener("click", settingsBackButtonClicked) for b in backButtons
     return
 
+############################################################
+#region eventListeners
 settingsoffButtonClicked = ->
     document.body.classList.remove("settings") 
-
-settingsSignallingServerClicked = ->
-    currentShownSettings = settingsSignallingserver
-    settingsSignallingserver.classList.add("here")
-
-settingsBackButtonClicked = ->
-    return unless currentShownSettings?
-    currentShownSettings.classList.remove("here")
-    currentShownSettings = null
     return
 
+############################################################
+settingsbuttonAccountClicked = ->
+    # settingspageAccount.
+    currentlyShownSettingspage = settingspageAccount
+    currentlyShownSettingspage.classList.add("here")
+    return
 
+settingsbuttonSignallingserverClicked = ->
+    # settingspageSignallingserver.
+    currentlyShownSettingspage = settingspageSignallingserver
+    currentlyShownSettingspage.classList.add("here")
+    return
 
+settingsbuttonTurnserverClicked = ->
+    # settingspageTurnserver.
+    currentlyShownSettingspage = settingspageTurnserver
+    currentlyShownSettingspage.classList.add("here")
+    return
+
+############################################################
+settingsBackButtonClicked = ->
+    return unless currentlyShownSettingspage?
+    currentlyShownSettingspage.classList.remove("here")
+    currentlyShownSettingspage = null
+    return
+
+#endregion

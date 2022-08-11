@@ -14,6 +14,9 @@ export initialize = ->
     
     #specific settings
     settingsbuttonAccount.addEventListener("click", settingsbuttonAccountClicked)
+    settingsbuttonSecretManager.addEventListener("click", settingsbuttonSecretManagerClicked)
+    settingsbuttonDataManager.addEventListener("click", settingsbuttonDataManagerClicked)
+
     settingsbuttonSignallingserver.addEventListener("click", settingsbuttonSignallingserverClicked)    
     settingsbuttonTurnserver.addEventListener("click", settingsbuttonTurnserverClicked)
     
@@ -36,6 +39,24 @@ settingsbuttonAccountClicked = ->
     # document.body.classList.add("away")
     # mainframe.classList.add("zoomed-out")
     return
+
+settingsbuttonSecretManagerClicked = ->
+    # settingspageSecretManager.
+    currentlyShownSettingspage = settingspageSecretManager
+    currentlyShownSettingspage.classList.add("here")
+    # document.body.classList.add("away")
+    # mainframe.classList.add("zoomed-out")
+    return
+
+settingsbuttonDataManagerClicked = ->
+    # settingspageDataManager.
+    currentlyShownSettingspage = settingspageDataManager
+    currentlyShownSettingspage.classList.add("here")
+    # document.body.classList.add("away")
+    # mainframe.classList.add("zoomed-out")
+    return
+
+    
 
 settingsbuttonSignallingserverClicked = ->
     # settingspageSignallingserver.

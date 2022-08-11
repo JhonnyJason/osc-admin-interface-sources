@@ -4,4 +4,9 @@ block title
     | STUN/TURN Server
 
 block content
-    | TODO...
+    input#turn-server-input(type="text")
+    #turn-server-works-indicator Server is ready
+    #turn-server-button-container
+        #turn-server-ok-button.click-button okay
+        #turn-server-reset-button.click-button reset
+    p#turn-server-explaination-text This is the Server used that we may overcome NATs - it must implement the STUN and TURN protocols.

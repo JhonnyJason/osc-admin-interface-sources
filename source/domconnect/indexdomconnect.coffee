@@ -5,6 +5,8 @@ indexdomconnect.initialize = () ->
     global.mainframe = document.getElementById("mainframe")
     global.settings = document.getElementById("settings")
     global.settingsbuttonAccount = document.getElementById("settingsbutton-account")
+    global.settingsbuttonSecretManager = document.getElementById("settingsbutton-secret-manager")
+    global.settingsbuttonDataManager = document.getElementById("settingsbutton-data-manager")
     global.settingsbuttonSignallingserver = document.getElementById("settingsbutton-signallingserver")
     global.settingsbuttonTurnserver = document.getElementById("settingsbutton-turnserver")
     global.content = document.getElementById("content")
@@ -17,6 +19,8 @@ indexdomconnect.initialize = () ->
     global.qrdisplayQr = document.getElementById("qrdisplay-qr")
     global.settingsoffButton = document.getElementById("settingsoff-button")
     global.settingspageAccount = document.getElementById("settingspage-account")
+    global.settingspageSecretManager = document.getElementById("settingspage-secret-manager")
+    global.settingspageDataManager = document.getElementById("settingspage-data-manager")
     global.settingspageSignallingserver = document.getElementById("settingspage-signallingserver")
     global.settingspageTurnserver = document.getElementById("settingspage-turnserver")
     return

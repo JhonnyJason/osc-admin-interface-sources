@@ -67,4 +67,3 @@ export copyToClipboard = (text) ->
     return
         
 #endregion
-

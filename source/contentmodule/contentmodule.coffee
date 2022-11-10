@@ -5,7 +5,30 @@ import { createLogFunctions } from "thingy-debug"
 #endregion
 
 ############################################################
+import * as authInterface from "./authenticationinterface.js"
+
+############################################################
 export initialize = ->
     log "initialize"
-    #Implement or Remove :-)
+    addClientButton.addEventListener("click", addClientButtonClicked)
+    removeClientButton.addEventListener("click", removeClientButtonClicked)
+
+    getClientsButton.addEventListener("click", getClientsButtonClicked)
+    return
+
+
+############################################################
+addClientButtonClicked = (evnt) ->
+    log "addClientButtonClicked"
+    
+    return
+
+removeClientButtonClicked = (evnt) ->
+    log "removeClientButtonClicked"
+    
+    return
+
+getClientsButtonClicked = (evnt) ->
+    log "getClientsButtonClicked"
+
     return

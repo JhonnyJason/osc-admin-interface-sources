@@ -19,3 +19,6 @@
 [submodule "source/qrreadermodule"]
 	path = source/qrreadermodule
 	url = git@github.com:JhonnyJason/pwa-sources-qrreadermodule.git
+[submodule "source/authenticationinterface"]
+	path = source/authenticationinterface
+	url = git@github.com:JhonnyJason/authenticationinterface.git

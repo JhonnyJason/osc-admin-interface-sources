@@ -22,3 +22,6 @@
 [submodule "source/authenticationinterface"]
 	path = source/authenticationinterface
 	url = git@github.com:JhonnyJason/authenticationinterface.git
+[submodule "source/validatabletimestampmodule"]
+	path = source/validatabletimestampmodule
+	url = git@github.com:JhonnyJason/thingy-sources-validatabletimestampmodule.git

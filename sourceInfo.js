@@ -2,6 +2,7 @@ module.exports = {
     getDependencies: () => {
         return {
             "secret-manager-client": "^0.0.6",
+            "secret-manager-crypto-utils": "^0.1.1",
             "vanillaqr": "^1.0.0",
             "qr-scanner": "^1.4.1",
             "thingy-network-base": "^0.0.4",

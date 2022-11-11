@@ -51,10 +51,10 @@ export class Client
         return @serverId
     
     getAuthCode: ->
-        serverId = await getServerId()
+        serverId = await @getServerId()
         if @nextAuthCode? then return @nextAuthCode
         ## TODO create new Auth code ? 
-        return
+        return "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef"
     
 
 ############################################################
@@ -132,7 +132,7 @@ authenticateResponse = (content, sigHex, idHex, timestamp) ->
 ############################################################
 #region effectiveSCI
 getNodeId = (client) ->
-    secretKey = client.secretKey
+    secretKey = client.secretKeyHex
     sciURL = client.serverURL
     timestamp = validatableStamp.create()
 

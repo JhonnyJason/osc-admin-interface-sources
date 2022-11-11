@@ -8,6 +8,7 @@ import { createLogFunctions } from "thingy-debug"
 import { createClient } from "./authclientmodule.js"
 import * as state from "./statemodule.js"
 import { info, error } from "./messageboxmodule.js"
+import * as osc from "./oscinterface.js"
 
 ############################################################
 masterClient = null
@@ -84,9 +85,11 @@ getClientsButtonClicked = (evnt) ->
 addSiteButtonClicked = (evnt) ->
     log "addSiteButtonClicked"
     try
-        throw new Error("Not Implemented yet!")
-        # clientId = clientIdInput.value
-        # reply = await masterClient.addClient(clientId)
+        serverURL = "https://localhost:6999"
+        authCode = await masterClient.getAuthCode()
+        siteURL = siteUrlInput.value
+
+        reply = await osc.addChatSite(serverURL, authCode, siteURL)
         olog reply
         info("ADD appearently successful!")
     catch err 
@@ -98,9 +101,11 @@ addSiteButtonClicked = (evnt) ->
 removeSiteButtonClicked = (evnt) ->
     log "removeSiteButtonClicked"
     try
-        throw new Error("Not Implemented yet!")
-        # clientId = clientIdInput.value
-        # reply = await masterClient.removeClient(clientId)
+        serverURL = "https://localhost:6999"
+        authCode = await masterClient.getAuthCode()
+        siteURL = siteUrlInput.value
+
+        reply = await osc.removeChatSite(serverURL, authCode, siteURL)
         olog {reply}
         info("REMOVE appearently successful!")
 
@@ -113,15 +118,16 @@ removeSiteButtonClicked = (evnt) ->
 getSitesButtonClicked = (evnt) ->
     log "getSitesButtonClicked"
     try
-        throw new Error("Not Implemented yet!")
-
-        # sites = await masterClient.getClients() 
-        olog {siteURLs}
+        serverURL = "https://localhost:6999"
+        authCode = await masterClient.getAuthCode()
+        
+        { chatSites } = osc.getAllChatSites(serverURL, authCode)
+        olog {chatSites}
         info("GETCHATSITES appearently successful!")
 
         html = ""
-        for url in siteURLs
-            html += "<li>#{url}</li>"
+        for siteURL in chatSites
+            html += "<li>#{siteURL}</li>"
         sitesList.innerHTML = html
 
     catch err

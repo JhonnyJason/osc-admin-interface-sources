@@ -15,6 +15,7 @@ indexdomconnect.initialize = () ->
     global.removeClientButton = document.getElementById("remove-client-button")
     global.getClientsButton = document.getElementById("get-clients-button")
     global.clientsToServeList = document.getElementById("clients-to-serve-list")
+    global.siteUrlInput = document.getElementById("site-url-input")
     global.addSiteButton = document.getElementById("add-site-button")
     global.removeSiteButton = document.getElementById("remove-site-button")
     global.getSitesButton = document.getElementById("get-sites-button")

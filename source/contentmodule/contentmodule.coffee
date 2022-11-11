@@ -11,6 +11,11 @@ import * as sci from "./authenticationinterface.js"
 import * as validatableStamp from "./validatabletimestampmodule.js"
 import * as state from "./statemodule.js"
 
+
+############################################################
+nonce = 0
+
+
 ############################################################
 export initialize = ->
     log "initialize"
@@ -37,13 +42,13 @@ addClientButtonClicked = (evnt) ->
         sciURL = "https://localhost:6999"
         timestamp = validatableStamp.create()
 
-        payload = {clientPublicKey, timestamp}
+        payload = {clientPublicKey, timestamp, nonce}
         # olog payload
 
         route = "/addClientToServe"
         signature = await createSignature(payload, route, secretKey)
         
-        reply = await sci.addClientToServe(sciURL, clientPublicKey, timestamp, signature)
+        reply = await sci.addClientToServe(sciURL, clientPublicKey, timestamp, nonce++, signature)
 
         if reply.error then throw new Error(reply.error)
         olog {reply}
@@ -60,13 +65,14 @@ removeClientButtonClicked = (evnt) ->
         sciURL = "https://localhost:6999"
         timestamp = validatableStamp.create()
 
-        payload = {clientPublicKey, timestamp}
+
+        payload = {clientPublicKey, timestamp, nonce}
         # olog payload
 
         route = "/removeClientToServe"
         signature = await createSignature(payload, route, secretKey)
         
-        reply = await sci.removeClientToServe(sciURL, clientPublicKey, timestamp, signature)
+        reply = await sci.removeClientToServe(sciURL, clientPublicKey, timestamp, nonce++, signature)
 
         if reply.error then throw new Error(reply.error)
         olog {reply}
@@ -82,13 +88,13 @@ getClientsButtonClicked = (evnt) ->
         sciURL = "https://localhost:6999"
         timestamp = validatableStamp.create()
 
-        payload = {timestamp}
+        payload = {timestamp, nonce}
         # olog payload
-
+        
         route = "/getClientsToServe"
         signature = await createSignature(payload, route, secretKey)
         
-        reply = await sci.getClientsToServe(sciURL, timestamp, signature)
+        reply = await sci.getClientsToServe(sciURL, timestamp, nonce++, signature)
         
         if reply.error then throw new Error(reply.error)
         olog {reply}

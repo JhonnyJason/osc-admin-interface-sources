@@ -47,6 +47,7 @@ export class Client
 
     ########################################################
     getServerId: ->
+        if !@publicKeyHex? then @publicKeyHex = await secUtl.createPublicKeyHex(@secretKeyHex)
         if !@serverId? then @serverId = await getValidatedNodeId(this)
         return @serverId
     
@@ -133,17 +134,18 @@ authenticateResponse = (content, sigHex, idHex, timestamp) ->
 #region effectiveSCI
 getNodeId = (client) ->
     secretKey = client.secretKeyHex
+    publicKey = client.publicKeyHex
     sciURL = client.serverURL
     timestamp = validatableStamp.create()
 
     nonce = client.nonce
     client.incNonce()
 
-    payload = {timestamp, nonce}
+    payload = { publicKey, timestamp, nonce}
     route = "/getNodeId"
 
     signature = await createSignature(payload, route, secretKey)    
-    reply = await sci.getNodeId(sciURL, timestamp, nonce, signature)
+    reply = await sci.getNodeId(sciURL, publicKey, timestamp, nonce, signature)
     if reply.error? then throw new Error("getNodeId replied with error: "+reply.error)
     return reply
 

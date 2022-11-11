@@ -10,6 +10,7 @@ import * as secUtl from "secret-manager-crypto-utils"
 import * as sci from "./authenticationinterface.js"
 import * as validatableStamp from "./validatabletimestampmodule.js"
 import * as state from "./statemodule.js"
+import { info, error } from "./messageboxmodule.js"
 
 
 ############################################################
@@ -52,8 +53,12 @@ addClientButtonClicked = (evnt) ->
 
         if reply.error then throw new Error(reply.error)
         olog {reply}
+        info("ADD appearently successful!")
 
-    catch err then log "Error on trying to add a new client: #{err.message}"
+    catch err 
+        m = "Error on trying to add a new client: #{err.message}"
+        log(m)
+        error(m)
     return
 
 removeClientButtonClicked = (evnt) ->
@@ -76,8 +81,12 @@ removeClientButtonClicked = (evnt) ->
 
         if reply.error then throw new Error(reply.error)
         olog {reply}
-        
-    catch err then log "Error on trying to remove client: #{err.message}"    
+        info("REMOVE appearently successful!")
+
+    catch err 
+        m = "Error on trying to remove client: #{err.message}"
+        error(m)
+        log(m)     
     return
 
 getClientsButtonClicked = (evnt) ->
@@ -98,14 +107,17 @@ getClientsButtonClicked = (evnt) ->
         
         if reply.error then throw new Error(reply.error)
         olog {reply}
-        {toServeList} = reply
+        info("GETCLIENTS appearently successful!")
 
+        {toServeList} = reply
         html = ""
         for client in toServeList
             html += "<li>#{client}</li>"
         clientsToServeList.innerHTML = html
 
-    catch err then log "Error on retrieveing clients to serve: #{err.message}"
+    catch err
+        m = "Error on retrieveing clients to serve: #{err.message}"
+        log(m)
+        error(m)
     return
 
-    return

@@ -5,17 +5,12 @@ import { createLogFunctions } from "thingy-debug"
 #endregion
 
 ############################################################
-import * as secUtl from "secret-manager-crypto-utils"
-
-import * as sci from "./authenticationinterface.js"
-import * as validatableStamp from "./validatabletimestampmodule.js"
+import { createClient } from "./authclientmodule.js"
 import * as state from "./statemodule.js"
 import { info, error } from "./messageboxmodule.js"
 
-
 ############################################################
-nonce = 0
-
+masterClient = null
 
 ############################################################
 export initialize = ->
@@ -24,6 +19,12 @@ export initialize = ->
     removeClientButton.addEventListener("click", removeClientButtonClicked)
 
     getClientsButton.addEventListener("click", getClientsButtonClicked)
+
+    secretKeyHex = state.get("secretKeyHex")
+    serverURL = "https://localhost:6999"
+    o = {serverURL, secretKeyHex}
+    
+    masterClient = createClient(o)
     return
 
 
@@ -37,24 +38,10 @@ createSignature = (payload, route, secretKeyHex) ->
 addClientButtonClicked = (evnt) ->
     log "addClientButtonClicked"
     try
-        secretKey = state.get("secretKeyHex")
-
-        clientPublicKey = clientIdInput.value
-        sciURL = "https://localhost:6999"
-        timestamp = validatableStamp.create()
-
-        payload = {clientPublicKey, timestamp, nonce}
-        # olog payload
-
-        route = "/addClientToServe"
-        signature = await createSignature(payload, route, secretKey)
-        
-        reply = await sci.addClientToServe(sciURL, clientPublicKey, timestamp, nonce++, signature)
-
-        if reply.error then throw new Error(reply.error)
-        olog {reply}
+        clientId = clientIdInput.value
+        reply = await masterClient.addClient(clientId)
+        olog reply
         info("ADD appearently successful!")
-
     catch err 
         m = "Error on trying to add a new client: #{err.message}"
         log(m)
@@ -64,22 +51,8 @@ addClientButtonClicked = (evnt) ->
 removeClientButtonClicked = (evnt) ->
     log "removeClientButtonClicked"
     try
-        secretKey = state.get("secretKeyHex")
-
-        clientPublicKey = clientIdInput.value
-        sciURL = "https://localhost:6999"
-        timestamp = validatableStamp.create()
-
-
-        payload = {clientPublicKey, timestamp, nonce}
-        # olog payload
-
-        route = "/removeClientToServe"
-        signature = await createSignature(payload, route, secretKey)
-        
-        reply = await sci.removeClientToServe(sciURL, clientPublicKey, timestamp, nonce++, signature)
-
-        if reply.error then throw new Error(reply.error)
+        clientId = clientIdInput.value
+        reply = await masterClient.removeClient(clientId)
         olog {reply}
         info("REMOVE appearently successful!")
 
@@ -92,29 +65,15 @@ removeClientButtonClicked = (evnt) ->
 getClientsButtonClicked = (evnt) ->
     log "getClientsButtonClicked"
     try
-        secretKey = state.get("secretKeyHex")
-
-        sciURL = "https://localhost:6999"
-        timestamp = validatableStamp.create()
-
-        payload = {timestamp, nonce}
-        # olog payload
-        
-        route = "/getClientsToServe"
-        signature = await createSignature(payload, route, secretKey)
-        
-        reply = await sci.getClientsToServe(sciURL, timestamp, nonce++, signature)
-        
-        if reply.error then throw new Error(reply.error)
-        olog {reply}
+        clients = await masterClient.getClients() 
+        olog {clients}
         info("GETCLIENTS appearently successful!")
 
-        {toServeList} = reply
         html = ""
-        for client in toServeList
+        for client in clients
             html += "<li>#{client}</li>"
         clientsToServeList.innerHTML = html
-
+        
     catch err
         m = "Error on retrieveing clients to serve: #{err.message}"
         log(m)

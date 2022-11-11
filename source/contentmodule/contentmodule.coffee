@@ -15,10 +15,16 @@ masterClient = null
 ############################################################
 export initialize = ->
     log "initialize"
+
+    ## Master Functions
     addClientButton.addEventListener("click", addClientButtonClicked)
     removeClientButton.addEventListener("click", removeClientButtonClicked)
-
     getClientsButton.addEventListener("click", getClientsButtonClicked)
+
+    ## Chat Sites
+    addSiteButton.addEventListener("click", addSiteButtonClicked)
+    removeSiteButton.addEventListener("click", removeSiteButtonClicked)
+    getSitesButton.addEventListener("click", getSitesButtonClicked)
 
     secretKeyHex = state.get("secretKeyHex")
     serverURL = "https://localhost:6999"
@@ -26,13 +32,6 @@ export initialize = ->
     
     masterClient = createClient(o)
     return
-
-
-############################################################
-createSignature = (payload, route, secretKeyHex) ->
-    content = route+JSON.stringify(payload)
-    return await secUtl.createSignature(content, secretKeyHex)
-
 
 ############################################################
 addClientButtonClicked = (evnt) ->
@@ -73,9 +72,60 @@ getClientsButtonClicked = (evnt) ->
         for client in clients
             html += "<li>#{client}</li>"
         clientsToServeList.innerHTML = html
-        
+
     catch err
         m = "Error on retrieveing clients to serve: #{err.message}"
+        log(m)
+        error(m)
+    return
+
+
+############################################################
+addSiteButtonClicked = (evnt) ->
+    log "addSiteButtonClicked"
+    try
+        throw new Error("Not Implemented yet!")
+        # clientId = clientIdInput.value
+        # reply = await masterClient.addClient(clientId)
+        olog reply
+        info("ADD appearently successful!")
+    catch err 
+        m = "Error on trying to add a chat site: #{err.message}"
+        log(m)
+        error(m)
+    return
+
+removeSiteButtonClicked = (evnt) ->
+    log "removeSiteButtonClicked"
+    try
+        throw new Error("Not Implemented yet!")
+        # clientId = clientIdInput.value
+        # reply = await masterClient.removeClient(clientId)
+        olog {reply}
+        info("REMOVE appearently successful!")
+
+    catch err 
+        m = "Error on trying to remove a chat site: #{err.message}"
+        error(m)
+        log(m)     
+    return
+
+getSitesButtonClicked = (evnt) ->
+    log "getSitesButtonClicked"
+    try
+        throw new Error("Not Implemented yet!")
+
+        # sites = await masterClient.getClients() 
+        olog {siteURLs}
+        info("GETCHATSITES appearently successful!")
+
+        html = ""
+        for url in siteURLs
+            html += "<li>#{url}</li>"
+        sitesList.innerHTML = html
+
+    catch err
+        m = "Error on retrieveing all chat sites: #{err.message}"
         log(m)
         error(m)
     return

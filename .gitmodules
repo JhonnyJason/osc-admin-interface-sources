@@ -25,3 +25,6 @@
 [submodule "source/validatabletimestampmodule"]
 	path = source/validatabletimestampmodule
 	url = git@github.com:JhonnyJason/thingy-sources-validatabletimestampmodule.git
+[submodule "source/oscinterface"]
+	path = source/oscinterface
+	url = git@github.com:JhonnyJason/oscinterface.git

@@ -108,6 +108,7 @@ getValidatedNodeId = (client) ->
         
         delete response.signature
         content = JSON.stringify(response)
+        console.log(content)
 
         await authenticateResponse(content, sigHex, idHex, timestamp)
     catch err then throw new Error("getValidatedNodeId - #{err.message}")

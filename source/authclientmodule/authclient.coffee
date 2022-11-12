@@ -54,44 +54,25 @@ export class Client
     getAuthCode: ->
         serverId = await @getServerId()
         if @nextAuthCode? then return @nextAuthCode
-        ## TODO create new Auth code ? 
-        return "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef"
+
+        # await indirectSessionSetup(this)
+        await directSessionSetup(this)
+
+        return @nextAuthCode
     
 
 ############################################################
 #region internalFunctions
-        
 
 ############################################################
-#region cryptoHelpers
-decrypt = (content, secretKey) ->
-    content = await secUtl.asymmetricDecrypt(content, secretKey)
-    content = secUtl.removeSalt(content)
-    try content = JSON.parse(content) 
-    catch err then return content # was no stringified Object
+#region misc Helpers
 
-
-    if content.encryptedContent? || content.encryptedContentHex? 
-        content = await secUtl.asymmetricDecrypt(content, secretKey)
-        content = secUtl.removeSalt(content)
-        try content = JSON.parse(content)
-        catch err then return content # was no stringified Object
-
-    return content
+directSessionSetup = (client) ->
+    return
 
 ############################################################
-encrypt = (content, publicKey) ->
-    if typeof content == "object" then content = JSON.stringify(content)
-    salt = secUtl.createRandomLengthSalt()    
-    content = salt + content
-
-    content = await secUtl.asymmetricEncrypt(content, publicKey)
-    return JSON.stringify(content)
-
-############################################################
-createSignature = (payload, route, secretKeyHex) ->
-    content = route+JSON.stringify(payload)
-    return await secUtl.createSignature(content, secretKeyHex)
+indirectSessionSetup = (client) ->
+    return
 
 ############################################################
 getValidatedNodeId = (client) ->
@@ -128,6 +109,40 @@ authenticateResponse = (content, sigHex, idHex, timestamp) ->
         
     catch err then throw new Error("Error on authenticateResponse! " + err)
     return
+
+#endregion
+
+
+############################################################
+#region cryptoHelpers
+decrypt = (content, secretKey) ->
+    content = await secUtl.asymmetricDecrypt(content, secretKey)
+    content = secUtl.removeSalt(content)
+    try content = JSON.parse(content) 
+    catch err then return content # was no stringified Object
+
+
+    if content.encryptedContent? || content.encryptedContentHex? 
+        content = await secUtl.asymmetricDecrypt(content, secretKey)
+        content = secUtl.removeSalt(content)
+        try content = JSON.parse(content)
+        catch err then return content # was no stringified Object
+
+    return content
+
+############################################################
+encrypt = (content, publicKey) ->
+    if typeof content == "object" then content = JSON.stringify(content)
+    salt = secUtl.createRandomLengthSalt()    
+    content = salt + content
+
+    content = await secUtl.asymmetricEncrypt(content, publicKey)
+    return JSON.stringify(content)
+
+############################################################
+createSignature = (payload, route, secretKeyHex) ->
+    content = route+JSON.stringify(payload)
+    return await secUtl.createSignature(content, secretKeyHex)
 
 #endregion
 

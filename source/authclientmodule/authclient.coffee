@@ -37,7 +37,7 @@ export class Client
 
     ########################################################
     addClient: (clientId) -> await addClientToServe(clientId, this)
-        
+
     removeClient: (clientId) -> await removeClientToServe(clientId, this)
 
     getClients:  ->
@@ -68,6 +68,7 @@ export class Client
 #region misc Helpers
 
 directSessionSetup = (client) ->
+    
     return
 
 ############################################################

@@ -2,6 +2,7 @@
 #region imports
 import * as secUtl from "secret-manager-crypto-utils"
 import * as tbut from "thingy-byte-utils"
+import * as sess from "thingy-session-utils"
 
 ############################################################
 import * as sci from "./authenticationinterface.js"
@@ -47,20 +48,36 @@ export class Client
 
     ########################################################
     getServerId: ->
-        if !@publicKeyHex? then @publicKeyHex = await secUtl.createPublicKeyHex(@secretKeyHex)
         if !@serverId? then @serverId = await getValidatedNodeId(this)
         return @serverId
-    
+    getPublicKey: ->
+        if !@publicKeyHex? then @publicKeyHex = await secUtl.createPublicKeyHex
+        (@secretKeyHex)
+        return @publicKeyHex
+
     getAuthCode: ->
-        serverId = await @getServerId()
+        # serverId = await @getServerId()
         if @nextAuthCode? then return @nextAuthCode
 
         # await indirectSessionSetup(this)
+        # await implicitSessionSetup(this)
         await directSessionSetup(this)
-
+        
         return @nextAuthCode
     
+    createNextAuthCode: (request) ->
+        if !@seedHex? then await @generateSeedEntropy()
+        @nextAuthCode = await sess.createAuthCode(@seedHex, request)
+        return true
 
+    ########################################################
+    generateSeedEntropy: ->
+        serverId = await @getServerId()
+        context = "lenny test context"+validatableStamp.create()
+        @seedHex = await secUtl.createSharedSecretHashHex(@secretKeyHex, serverId, context)
+        return 
+
+        
 ############################################################
 #region internalFunctions
 
@@ -68,11 +85,35 @@ export class Client
 #region misc Helpers
 
 directSessionSetup = (client) ->
+    secretKey = client.secretKeyHex
+
+    publicKey = await client.getPublicKey()
+    sciURL = client.serverURL
+    timestamp = validatableStamp.create()
     
+    nonce = client.nonce
+    client.incNonce()
+    
+    payload = {publicKey, timestamp, nonce}
+    route = "/startSession"
+
+    signature = await createSignature(payload, route, secretKey)    
+
+    request = { publicKey, timestamp, nonce, signature }
+    replyP = sci.startSession(sciURL, publicKey, timestamp, nonce, signature)
+    authP = client.createNextAuthCode(request)
+    [reply, ok] = await Promise.all([replyP, authP])
+
+    if reply.error then throw new Error("startSession replied with error: #{reply.error}")
     return
 
 ############################################################
 indirectSessionSetup = (client) ->
+    return
+
+
+############################################################
+implicitSessionSetup = (client) ->
     return
 
 ############################################################

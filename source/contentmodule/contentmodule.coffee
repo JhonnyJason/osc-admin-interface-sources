@@ -27,6 +27,7 @@ export initialize = ->
     removeSiteButton.addEventListener("click", removeSiteButtonClicked)
     getSitesButton.addEventListener("click", getSitesButtonClicked)
 
+    ## Client Setup
     secretKeyHex = state.get("secretKeyHex")
     serverURL = "https://localhost:6999"
     o = {serverURL, secretKeyHex}

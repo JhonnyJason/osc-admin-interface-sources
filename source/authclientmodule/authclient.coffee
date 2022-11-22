@@ -1,4 +1,10 @@
 ############################################################
+#region debug
+import { createLogFunctions } from "thingy-debug"
+{log, olog} = createLogFunctions("authclient")
+#endregion
+
+############################################################
 #region imports
 import * as secUtl from "secret-manager-crypto-utils"
 import * as tbut from "thingy-byte-utils"
@@ -50,9 +56,9 @@ export class Client
     getServerId: ->
         if !@serverId? then @serverId = await getValidatedNodeId(this)
         return @serverId
+
     getPublicKey: ->
-        if !@publicKeyHex? then @publicKeyHex = await secUtl.createPublicKeyHex
-        (@secretKeyHex)
+        if !@publicKeyHex? then @publicKeyHex = await secUtl.createPublicKeyHex(@secretKeyHex)
         return @publicKeyHex
 
     getAuthCode: ->
@@ -77,7 +83,7 @@ export class Client
         @seedHex = await secUtl.createSharedSecretHashHex(@secretKeyHex, serverId, context)
         return 
 
-        
+
 ############################################################
 #region internalFunctions
 
@@ -100,9 +106,11 @@ directSessionSetup = (client) ->
     signature = await createSignature(payload, route, secretKey)    
 
     request = { publicKey, timestamp, nonce, signature }
-    replyP = sci.startSession(sciURL, publicKey, timestamp, nonce, signature)
+    # replyP = sci.startSession(sciURL, publicKey, timestamp, nonce, signature)
     authP = client.createNextAuthCode(request)
-    [reply, ok] = await Promise.all([replyP, authP])
+    # [reply, ok] = await Promise.all([replyP, authP])
+    try await authP
+    catch err then throw new Error("creating authCode threw error: #{err.message}")
 
     if reply.error then throw new Error("startSession replied with error: #{reply.error}")
     return
@@ -192,7 +200,7 @@ createSignature = (payload, route, secretKeyHex) ->
 #region effectiveSCI
 getNodeId = (client) ->
     secretKey = client.secretKeyHex
-    publicKey = client.publicKeyHex
+    publicKey = await client.getPublicKey()
     sciURL = client.serverURL
     timestamp = validatableStamp.create()
 
@@ -201,6 +209,9 @@ getNodeId = (client) ->
 
     payload = { publicKey, timestamp, nonce}
     route = "/getNodeId"
+   
+    log "getNodeId"
+    olog payload
 
     signature = await createSignature(payload, route, secretKey)    
     reply = await sci.getNodeId(sciURL, publicKey, timestamp, nonce, signature)
@@ -212,7 +223,7 @@ getNodeId = (client) ->
 ############################################################
 startSession = (action, client) ->
     server = client.serverURL
-    publicKey = client.publicKeyHex
+    publicKey = client.getPublicKey()
     secretKey = client.secretKeyHex
     timestamp = validatableStamp.create()
 

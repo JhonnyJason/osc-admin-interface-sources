@@ -72,8 +72,13 @@ export class Client
         return @nextAuthCode
     
     createNextAuthCode: (request) ->
+        log "authclient.createNextAuthCode"
         if !@seedHex? then await @generateSeedEntropy()
         @nextAuthCode = await sess.createAuthCode(@seedHex, request)
+        authCode = @nextAuthCode
+        request = request
+        seedHex = @seedHex
+        olog { seedHex, authCode, request }
         return true
 
     ########################################################
@@ -106,11 +111,13 @@ directSessionSetup = (client) ->
     signature = await createSignature(payload, route, secretKey)    
 
     request = { publicKey, timestamp, nonce, signature }
-    # replyP = sci.startSession(sciURL, publicKey, timestamp, nonce, signature)
+    request = JSON.stringify(request)
+    
+    replyP = sci.startSession(sciURL, publicKey, timestamp, nonce, signature)
     authP = client.createNextAuthCode(request)
-    # [reply, ok] = await Promise.all([replyP, authP])
-    try await authP
-    catch err then throw new Error("creating authCode threw error: #{err.message}")
+    [reply, ok] = await Promise.all([replyP, authP])
+    # try await authP
+    # catch err then throw new Error("creating authCode threw error: #{err.message}")
 
     if reply.error then throw new Error("startSession replied with error: #{reply.error}")
     return

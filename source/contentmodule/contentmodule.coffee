@@ -109,8 +109,7 @@ removeSiteButtonClicked = (evnt) ->
         reply = await osc.removeChatSite(serverURL, authCode, siteURL)
         olog {reply}
         info("REMOVE appearently successful!")
-
-    catch err 
+    catch err
         m = "Error on trying to remove a chat site: #{err.message}"
         error(m)
         log(m)     
@@ -122,7 +121,7 @@ getSitesButtonClicked = (evnt) ->
         serverURL = "https://localhost:6999"
         authCode = await masterClient.getAuthCode()
         
-        { chatSites } = osc.getAllChatSites(serverURL, authCode)
+        { chatSites } = await osc.getAllChatSites(serverURL, authCode)
         olog {chatSites}
         info("GETCHATSITES appearently successful!")
 
@@ -130,7 +129,6 @@ getSitesButtonClicked = (evnt) ->
         for siteURL in chatSites
             html += "<li>#{siteURL}</li>"
         sitesList.innerHTML = html
-
     catch err
         m = "Error on retrieveing all chat sites: #{err.message}"
         log(m)

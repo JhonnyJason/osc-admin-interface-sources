@@ -28,3 +28,6 @@
 [submodule "source/oscinterface"]
 	path = source/oscinterface
 	url = git@github.com:JhonnyJason/oscinterface.git
+[submodule "source/authclientmodule"]
+	path = source/authclientmodule
+	url = git@github.com:JhonnyJason/thingy-sources-authclientmodule.git
